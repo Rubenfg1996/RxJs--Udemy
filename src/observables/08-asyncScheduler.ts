@@ -1,0 +1,22 @@
+import { asyncScheduler } from 'rxjs';
+
+const saludar = () => console.log('Hola Mundo');
+const saludar2 = nombre => console.log(`Hola ${nombre}`);
+
+// El tercer parametro es lo que queremos pasar a la funcion saludar2
+asyncScheduler.schedule(saludar2, 2000, 'Ruben');
+
+// setInerval usando asynScheduler
+const subs = asyncScheduler.schedule(function(state) {
+    console.log('state', state);
+
+    this.schedule(state + 1, 1000);
+
+}, 3000, 0);
+
+
+// setTimeout( () => {
+//     subs.unsubscribe();
+// }, 6000);
+// Lo de abajo es lo mismo que lo comentado arriba
+asyncScheduler.schedule( () => subs.unsubscribe(), 6000);
